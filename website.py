@@ -4,7 +4,6 @@
 
 from flask import Flask, render_template, jsonify, request
 import programs.Roulette as rl
-#import programs.Craps as cr
 import programs.BlackJack as bj
 import os
 
@@ -50,7 +49,6 @@ def execute_roulette():
 def execute_craps():
     # Execute the cr.craps() method
     global balance
-    balance = cr.craps(balance)
     return jsonify({'balance': balance})
 
 @app.route('/get_balance', methods=['GET'])
