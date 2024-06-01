@@ -12,6 +12,19 @@
     <button id="backButton" onclick="handleButtonClick('/home')">Back</button>
     <p>Welcome to the Roulette table.</p>
 
+    <!-- A button to open the popup form -->
+    <button class="open-button" onclick="openForm()">Open Instructions</button>
+
+    <!-- The form -->
+    <div class="form-popup" id="myForm">
+    <form action="/action_page.php" class="form-container">
+        <p>Welcome to Roulette! Your goal is to see whether the dice will roll a winning number.</p>
+        <p>In the first round, if you roll a 7 or 11, you win. If you roll a 2, 3, or 12, you automatically lose.</p>
+        <p>Any other combination of values will be added to the point, and you will continue rerolling until you get that number again or roll a 7, in which you lose</p>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+    </form>
+    </div>
+
     <script>
         $(document).ready(function() {
             // Make an asynchronous request to the server after the page is loaded
