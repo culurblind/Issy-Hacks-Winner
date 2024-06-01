@@ -158,4 +158,12 @@ function roulette(balance, betAmount, typeOfBet, specificBet) {
     } else {
         return { balance, win: false, value: `${value} ${wheel[value]}` };
     }
+
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+      }
+      
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
 }
