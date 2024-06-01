@@ -38,6 +38,7 @@
       <option value="dontPassBet">Dont Pass Bet</option>
     </select>
     <button id="rollButton" onclick="roll()">Roll</button>
+    <p id="output"></p>
 
     <script>
         $(document).ready(function() {
@@ -49,8 +50,9 @@
                 var bet_type = document.getElementById("type")
 
                 const result = Craps_Roll(Balance, Bet, bet_type, null)
-
                 
+                var outputElement = document.getElementById('output');
+                outputElement.textContent = "Balance: " + result[0];
             }
 
             }
