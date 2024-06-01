@@ -31,9 +31,9 @@
 
 
     <label for="bet">Bet:</label>
-    <input type="text" id="fname" bet="bet"><br><br>
+    <input type="text" id="bet" bet="bet"><br><br>
     <label for="type">Pick a Bet:</label>
-    <select name="type" id="bets">
+    <select name="type" id="type">
       <option value="passLineBet">Pass Line Bet</option>
       <option value="dontPassBet">Dont Pass Bet</option>
     </select>
@@ -45,14 +45,17 @@
             $.get('/execute_craps');
             
             function roll() {
+                var bet = document.getElementById("bet")
+                var bet_type = document.getElementById("type")
+
+                const result = Craps_Roll(Balance, Bet, bet_type, null)
+
                 
             }
 
-            const result = Craps_Roll(Balance, Bet, bet_type, null)
-            if (result[1] == "win") {
-                
             }
-        });
+
+        );
     </script>
 </body>
 </html>
