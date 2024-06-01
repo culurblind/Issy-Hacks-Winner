@@ -3,8 +3,6 @@
 # in a VS Code terminal
 
 from flask import Flask, render_template, jsonify, request
-import programs.Roulette as rl
-import programs.BlackJack as bj
 import os
 
 app = Flask(__name__)
@@ -35,14 +33,12 @@ def craps():
 def execute_blackjack():
     # Execute the bj.blackjack() method
     global balance
-    balance = bj.blackJack(balance)
     return jsonify({'balance': balance})
 
 @app.route('/execute_roulette', methods=['GET'])
 def execute_roulette():
     # Execute the rl.roulette() method
     global balance
-    balance = rl.roulette(balance)
     return jsonify({'balance': balance})
 
 @app.route('/execute_craps', methods=['GET'])

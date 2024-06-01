@@ -1,7 +1,5 @@
-<!-- craps.html runs the front end code for the craps python game-->
-
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='craps.css') }}">
     <script src="{{ url_for('static', filename='home.js') }}"></script>
@@ -10,7 +8,7 @@
 </head>
 <body>
     <h1>Craps</h1>
-    <h2 id="result">{{ result }}</h2>
+    <h2 id="result">Balance: $<span id="balance">1000</span></h2>
     <button id="backButton" onclick="handleButtonClick('/home')">Back</button>
     <p>Welcome to the Craps table.</p>
 
@@ -19,45 +17,132 @@
 
     <!-- The instructions -->
     <div class="form-popup" id="myForm">
-    <form action="/action_page.php" class="form-container">
-        <p>Welcome to Craps! Your goal is to see whether the dice will roll a winning number.</p>
-        <p>In the first round, if you roll a 7 or 11, you win. If you roll a 2, 3, or 12, you automatically lose.</p>
-        <p>Any other combination of values will be added to the point, and you will continue rerolling until you get that number again or roll a 7, in which you lose</p>
-        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-    </form>
+        <form action="/action_page.php" class="form-container">
+            <p>Welcome to Craps! Your goal is to see whether the dice will roll a winning number.</p>
+            <p>In the first round, if you roll a 7 or 11, you win. If you roll a 2, 3, or 12, you automatically lose.</p>
+            <p>Any other combination of values will be added to the point, and you will continue rerolling until you get that number again or roll a 7, in which you lose</p>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
     </div>
 
     <h1>The bet and bet type</h1>
 
-
     <label for="bet">Bet:</label>
-    <input type="text" id="bet" bet="bet"><br><br>
+    <input type="number" id="bet" name="bet"><br><br>
     <label for="type">Pick a Bet:</label>
     <select name="type" id="type">
-      <option value="passLineBet">Pass Line Bet</option>
-      <option value="dontPassBet">Dont Pass Bet</option>
+        <option value="passLineBet">Pass Line Bet</option>
+        <option value="dontPassBet">Don't Pass Bet</option>
     </select>
     <button id="rollButton" onclick="roll()">Roll</button>
     <p id="output"></p>
 
     <script>
-        $(document).ready(function() {
-            // Make an asynchronous request to the server after the page is loaded
-            $.get('/execute_craps');
-            
-            function roll() {
-                var bet = document.getElementById("bet")
-                var bet_type = document.getElementById("type")
+        let number = null;
 
-                const result = Craps_Roll(Balance, Bet, bet_type, null)
-                
-                var outputElement = document.getElementById('output');
-                outputElement.textContent = "Balance: " + result[0];
+        function Craps_Roll(Balance, Bet, bet_type, OldNumber) {
+            const roll = Dice_roll();
+            const number = roll[0] + roll[1];
+            let result = [Balance, "none", roll[0], roll[1]];
+
+            if (bet_type === "passLineBet") {
+                if (OldNumber != null) {
+                    if (number === OldNumber) {
+                        Balance += Bet;
+                        result[1] = "win";
+                        result[0] = Balance;
+                        return result;
+                    } else if (number === 7) {
+                        Balance -= Bet;
+                        result[1] = "lose";
+                        result[0] = Balance;
+                        return result;
+                    } else {
+                        return result;
+                    }
+                } else if (number === 7 || number === 11) {
+                    Balance += Bet;
+                    result[1] = "win";
+                    result[0] = Balance;
+                    return result;
+                } else if (number === 2 || number === 3 || number === 12) {
+                    Balance -= Bet;
+                    result[1] = "lose";
+                    result[0] = Balance;
+                    return result;
+                }
             }
 
+            if (bet_type === "dontPassBet") {
+                if (OldNumber != null) {
+                    if (number === OldNumber) {
+                        Balance -= Bet;
+                        result[1] = "lose";
+                        result[0] = Balance;
+                        return result;
+                    } else if (number === 7) {
+                        Balance += Bet;
+                        result[1] = "win";
+                        result[0] = Balance;
+                        return result;
+                    } else {
+                        return result;
+                    }
+                } else if (number === 2 || number === 3) {
+                    Balance += Bet;
+                    result[1] = "win";
+                    result[0] = Balance;
+                    return result;
+                } else if (number === 7 || number === 11) {
+                    Balance -= Bet;
+                    result[1] = "lose";
+                    result[0] = Balance;
+                    return result;
+                }
             }
 
-        );
+            return result;
+        }
+
+        function Dice_roll() {
+            const results = [Math.floor(Math.random() * 6) + 1, Math.floor(Math.random() * 6) + 1];
+            return results;
+        }
+
+        function roll() {
+            const balanceElement = document.getElementById('balance');
+            const bet = parseInt(document.getElementById('bet').value);
+            const betType = document.getElementById('type').value;
+
+            let balance = parseInt(balanceElement.innerText);
+            if (isNaN(bet) || bet <= 0) {
+                alert("Please enter a valid bet amount");
+                return;
+            }
+
+            const result = Craps_Roll(balance, bet, betType, number);
+
+            if (result[1] === "none") {
+                number = result[2] + result[3];
+            } else {
+                number = null;
+            }
+
+            balanceElement.innerText = result[0];
+            document.getElementById('output').innerText = `Result: ${result[1]}. You rolled ${result[2]} and ${result[3]}. Balance: ${result[0]}`;
+        }
+
+        function handleButtonClick(url) {
+            window.location.href = url;
+        }
+
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
     </script>
 </body>
 </html>
