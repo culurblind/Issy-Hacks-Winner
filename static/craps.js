@@ -8,7 +8,7 @@ function Craps_Roll(Balance, Bet, bet_type, OldNumber) {
     number = roll[0] + roll[1]
     const result = [Balance, "non", roll[1], roll[2]];
     if (bet_type == "PassLineBet") {
-        if (number != null) {
+        if (OldNumber != null) {
             if ((number) == OldNumber) {
                 Balance = Balance + Bet;
                 result[1] == "win"
@@ -37,7 +37,7 @@ function Craps_Roll(Balance, Bet, bet_type, OldNumber) {
     }
 
         if (bet_type == "DontPassBet") {
-            if (number != null) {
+            if (OldNumber != null) {
                 if (number == OldNumber) {
                     result = Balance - Bet;
                     result[1] == "lose"
