@@ -14,10 +14,10 @@
     <button id="backButton" onclick="handleButtonClick('/home')">Back</button>
     <p>Welcome to the Craps table.</p>
 
-    <!-- A button to open the popup form -->
+    <!-- A button to open the popup instructions -->
     <button class="open-button" onclick="openForm()">Open Instructions</button>
 
-    <!-- The form -->
+    <!-- The instructions -->
     <div class="form-popup" id="myForm">
     <form action="/action_page.php" class="form-container">
         <p>Welcome to Craps! Your goal is to see whether the dice will roll a winning number.</p>
@@ -27,13 +27,31 @@
     </form>
     </div>
 
+    <h1>The bet and bet type</h1>
 
 
+    <label for="bet">Bet:</label>
+    <input type="text" id="fname" bet="bet"><br><br>
+    <label for="type">Pick a Bet:</label>
+    <select name="type" id="bets">
+      <option value="passLineBet">Pass Line Bet</option>
+      <option value="dontPassBet">Dont Pass Bet</option>
+    </select>
+    <button id="rollButton" onclick="roll()">Roll</button>
 
     <script>
         $(document).ready(function() {
             // Make an asynchronous request to the server after the page is loaded
             $.get('/execute_craps');
+            
+            function roll() {
+                
+            }
+
+            const result = Craps_Roll(Balance, Bet, bet_type, null)
+            if (result[1] == "win") {
+                
+            }
         });
     </script>
 </body>
