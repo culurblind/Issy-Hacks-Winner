@@ -1,0 +1,51 @@
+/*
+  home.css does the styling for home.html in the front end
+*/
+
+body {
+    background-image:url("https://i.pinimg.com/736x/5b/c1/bd/5bc1bddc6efee1b27dc339a4efbb87fd.jpg");
+    background-size:cover;
+    text-align: center;
+    color: white;
+  }
+
+  #Button1 {
+    background-image: url("https://as2.ftcdn.net/v2/jpg/03/45/77/49/1000_F_345774926_G6sbBTDZRjkJmUfWdDgAi4XWnCbQ90uF.jpg");
+  }
+
+  #Button2 {
+    background-image: url("https://as1.ftcdn.net/v2/jpg/01/52/11/90/1000_F_152119015_UiLaVmhTCmtrXdhRfVowbCwfnFYbnue7.jpg");
+  }
+
+  #Button3 {
+    background-image: url("https://play-lh.googleusercontent.com/Y7xzS-pLALhgbOBYTrjxLSebNsbsQ-htfFgZ5W4mew98zmeg-SEB948j_NdvBXZ6xxg");
+  }
+
+  .imgBTN {
+    width: 400px;
+    height: 400px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    font-size: 50px;
+    font-weight: bold;
+    border-radius: 50px;
+    margin-right: 75px;
+    margin-left: 75px;
+  }
+
+  textarea {
+    display:block;
+    padding: 10px;
+    width: 400px;
+    height: 400px;
+    margin:auto;
+  }
+
+  #goBTN {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin:auto;
+
+  }

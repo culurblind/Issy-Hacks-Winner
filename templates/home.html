@@ -1,0 +1,57 @@
+<!-- home.html runs the front end code for the main screen -->
+
+<!DOCTYPE html>
+
+<head>
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+   <script src="{{ url_for('static', filename='home.js') }}"></script>   
+</head>
+
+<html lang="en">
+<body>
+  <h1>CODEBOY CASINO</h1>
+
+  <h2 id="balance-counter">Loading...</h2>
+
+  <button class="imgBTN" id="Button1" onclick="handleButtonClick('/blackjack')"></button>
+  <button class="imgBTN" id="Button2" onclick="handleButtonClick('/roulette')"></button>
+  <button class="imgBTN" id="Button3" onclick="handleButtonClick('/craps')"></button>
+
+  <script>
+   $(document).ready(function() {
+       // Function to periodically check for balance
+       function checkBalance() {
+           // Make an asynchronous request to the server to get the updated balance
+           $.get('/get_balance', function(data) {
+               // Check if 'balance' is defined in the response data
+               if (data.hasOwnProperty('balance')) {
+                   var balanceValue = data.balance;
+
+                   // Update the balance value on the page
+                   $('#balance-counter').text('Balance: ' + balanceValue);
+
+                   // Check if the balance is zero or less
+                   if (balanceValue <= 0) {
+                       // Display "Game Over" message
+                       $('#balance-counter').text('Game Over');
+                       // Hide buttons if balance is zero or less
+                       $('.imgBTN').hide();
+                   } else {
+                       // Show buttons if balance is greater than zero
+                       $('.imgBTN').show();
+                   }
+               } else {
+                   // Retry after a delay if balance is not available
+                   setTimeout(checkBalance, 500);
+               }
+           });
+       }
+
+       // Initial check for balance
+       checkBalance();
+   });
+</script>
+
+</body>
+</html>

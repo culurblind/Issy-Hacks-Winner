@@ -1,0 +1,24 @@
+<!-- craps.html runs the front end code for the craps python game-->
+
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='craps.css') }}">
+    <script src="{{ url_for('static', filename='home.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{{ url_for('static', filename='craps.js') }}"></script>
+</head>
+<body>
+    <h1>Craps</h1>
+    <h2 id="result">{{ result }}</h2>
+    <button id="backButton" onclick="handleButtonClick('/home')">Back</button>
+    <p>Welcome to the Craps table.</p>
+
+    <script>
+        $(document).ready(function() {
+            // Make an asynchronous request to the server after the page is loaded
+            $.get('/execute_craps');
+        });
+    </script>
+</body>
+</html>

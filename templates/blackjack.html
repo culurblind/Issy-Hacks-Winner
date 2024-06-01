@@ -1,0 +1,24 @@
+<!-- blackjack.html runs the front end code for the blackjack python game-->
+
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='blackjack.css') }}">
+    <script src="{{ url_for('static', filename='home.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{{ url_for('static', filename='roulette.js') }}"></script>
+</head>
+<body>
+    <h1>Black Jack</h1>
+    <h2 id="result">{{ result }}</h2>
+    <button id="backButton" onclick="handleButtonClick('/home')">Back</button>
+    <p>Welcome to the Roulette table.</p>
+
+    <script>
+        $(document).ready(function() {
+            // Make an asynchronous request to the server after the page is loaded
+            $.get('/execute_blackjack');
+        });
+    </script>
+</body>
+</html>
