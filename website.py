@@ -3,18 +3,11 @@
 # in a VS Code terminal
 
 from flask import Flask, render_template, jsonify, request
-import programs.Roulette as rl
-import programs.Craps as cr
-import programs.BlackJack as bj
 import os
 
 app = Flask(__name__)
 
 balance = 1000
-
-# clear_terminal() function clears the terminal after every round
-def clear_terminal():
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 @app.route('/')
 def home():
@@ -39,7 +32,6 @@ def craps():
 @app.route('/execute_blackjack', methods=['GET'])
 def execute_blackjack():
     # Execute the bj.blackjack() method
-    clear_terminal()
     global balance
     balance = bj.blackJack(balance)
     return jsonify({'balance': balance})
@@ -47,7 +39,6 @@ def execute_blackjack():
 @app.route('/execute_roulette', methods=['GET'])
 def execute_roulette():
     # Execute the rl.roulette() method
-    clear_terminal()
     global balance
     balance = rl.roulette(balance)
     return jsonify({'balance': balance})
@@ -55,7 +46,6 @@ def execute_roulette():
 @app.route('/execute_craps', methods=['GET'])
 def execute_craps():
     # Execute the cr.craps() method
-    clear_terminal()
     global balance
     balance = cr.craps(balance)
     return jsonify({'balance': balance})
